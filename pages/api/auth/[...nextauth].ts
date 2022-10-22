@@ -1,10 +1,21 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import prisma from "../../../lib/prismadb";
+
+interface User {
+  id: String,
+  username: String,
+  role: String,
+}
 
 export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
+  secret: process.env.SECRET,
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -12,23 +23,44 @@ export const authOptions: NextAuthOptions = {
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         const {username, password } = credentials as {
             username: string;
             password: string;
         };
         // Add logic here to look up the user from the credentials supplied
-        const user = { id: "1", username: "TEST", password: "123" };
-
-        if (username === user.username && password === user.password) {
-            console.log(user)
-            return {id: user.id, name: user.username}
+        const userDB = await prisma.user.findUnique({
+          where: {
+            username: credentials?.username,
+          },
+        });
+        console.log(userDB)
+        if (userDB?.password === credentials?.password && userDB != null && credentials != null) { 
+            return {id: userDB.id, username: userDB.username, role: userDB.role}
         } else {
             return null; // Return null if user not found
         }
-      },
+      }
     }),
   ],
+  callbacks: {
+    async jwt({token, user }: any) {
+      if (user) {
+        token.id = user.id;
+        token.username = user.username;
+        token.role = user.role;
+      }
+      return token;
+    },
+    async session({ session, token }: any) {
+      if(token) {
+        session.id = token.id;
+        session.username = token.username;
+        session.role = token.role;
+      }
+      return session;
+    }
+  },
 };
 
 export default NextAuth(authOptions);
