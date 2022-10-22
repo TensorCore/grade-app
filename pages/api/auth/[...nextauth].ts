@@ -24,14 +24,10 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const {username, password } = credentials as {
-            username: string;
-            password: string;
-        };
         // Add logic here to look up the user from the credentials supplied
         const userDB = await prisma.user.findUnique({
           where: {
-            username: credentials?.username,
+            username: credentials?.username.toUpperCase(),
           },
         });
         console.log(userDB)

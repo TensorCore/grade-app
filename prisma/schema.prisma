@@ -10,14 +10,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Classes {
+  id        Int             @id @default(autoincrement())
+  name      String
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  teacherId String
+  teacher   User            @relation("Teacher", fields: [teacherId], references: [id])
+  enrolled  Int             @default(0)
+  maxenroll Int
+  students  UserInClasses[]
+}
+
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  username      String?   @unique 
-  password      String
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  role          Role    @default(STUDENT) // STUDENT, TEACHER, ADMIN
+  id           String          @id @default(cuid())
+  name         String?
+  username     String?         @unique
+  password     String
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  role         Role            @default(STUDENT) // STUDENT, TEACHER, ADMIN
+  teacherClass Classes[]       @relation("Teacher")
+  classes      UserInClasses[]
+}
+
+model UserInClasses {
+  grade     Float    @default(100)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  classId   Int
+  class     Classes  @relation(fields: [classId], references: [id])
+
+  @@id([userId, classId])
 }
 
 enum Role {
