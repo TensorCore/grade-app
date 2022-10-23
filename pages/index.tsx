@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-//Home Page for Grade App
 
 const Home: NextPage = () => {
   const router = useRouter();

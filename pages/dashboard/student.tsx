@@ -5,16 +5,19 @@ import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]';
+import { Prisma } from '@prisma/client';
 
 //Dashboard Page for Grade App
 interface Props {
-    sessionData:{
+    Data:{
         id: String,
         username: String,
         role: String,
-    }
+        name: String,
+    },
+    DBData: any
 }
-const Dashboard: NextPage<Props> = ({sessionData}) => {
+const Dashboard: NextPage<Props> = ({Data, DBData}) => {
     return (
         <>
             <Head>
@@ -28,7 +31,7 @@ const Dashboard: NextPage<Props> = ({sessionData}) => {
                     <div className="flex flex-col items-center justify-center min-h-screen py-2 text-center">
                         <h1 className="text-6xl font-bold text-primary-content">Dashboard</h1>
                         <p className="mt-3 text-2xl text-secondary-content">
-                            {'Hello, ' + sessionData.username}
+                            {'Hello, ' + Data.username}
                         </p>
                         <div className="mt-6">
                             <Link href="/api/auth/signout">
@@ -71,15 +74,28 @@ export async function getServerSideProps(context: any) {
         }
     }
 
-    const sessionData = {
+    const Data = {
         id: session.id,
         role: session.role,
         username: session.username,
     }
 
+    let Classes = await prisma?.classes.findMany({
+        where: {
+            students: {
+                some: {
+                    userId: session.id
+                }
+            }
+        },
+    })
+
+    const DBData = JSON.stringify(Classes)
+
     return {
         props: {
-            sessionData
+            Data,
+            DBData
         },
     }
 }
