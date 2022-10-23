@@ -32,7 +32,7 @@ export const authOptions: NextAuthOptions = {
         });
         console.log(userDB)
         if (userDB?.password === credentials?.password && userDB != null && credentials != null) { 
-            return {id: userDB.id, username: userDB.username, role: userDB.role}
+            return {id: userDB.id, username: userDB.username, role: userDB.role, name: userDB?.name}
         } else {
             return null; // Return null if user not found
         }
@@ -40,11 +40,12 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({token, user }: any) {
+    async jwt({ token, user }: any) {
       if (user) {
         token.id = user.id;
         token.username = user.username;
         token.role = user.role;
+        token.name = user?.name;
       }
       return token;
     },
@@ -53,10 +54,14 @@ export const authOptions: NextAuthOptions = {
         session.id = token.id;
         session.username = token.username;
         session.role = token.role;
+        session.name = token?.name;
       }
       return session;
     }
   },
+  pages: {
+    signIn: "/login"
+  }
 };
 
 export default NextAuth(authOptions);
