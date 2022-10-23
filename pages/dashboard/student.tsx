@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import { unstable_getServerSession } from 'next-auth';
-import { authOptions } from './api/auth/[...nextauth]';
+import { authOptions } from '../api/auth/[...nextauth]';
 
 //Dashboard Page for Grade App
 interface Props {
@@ -53,11 +53,19 @@ export default Dashboard;
 
 export async function getServerSideProps(context: any) {
     const session:any = await unstable_getServerSession(context.req, context.res, authOptions)
-
     if (!session) {
         return {
             redirect: {
                 destination: '/',
+                permanent: false,
+            },
+        }
+    }
+
+    if(session.role !== 'STUDENT'){
+        return {
+            redirect: {
+                destination: '/dashboard/' + session.role.toLowerCase(),
                 permanent: false,
             },
         }

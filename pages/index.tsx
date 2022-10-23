@@ -7,9 +7,9 @@ import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
   const router = useRouter()
-  const {status, data } = useSession()
+  const {status, data: session }: any = useSession()
   if (status === 'authenticated') {
-    router.push('/dashboard')
+    router.push(`/dashboard/${session.role.toLowerCase()}`)
   }
 
   return (
