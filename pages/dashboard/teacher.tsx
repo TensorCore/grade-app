@@ -65,7 +65,7 @@ export async function getServerSideProps(context: any) {
         }
     }
 
-    if(session.role !== 'STUDENT'){
+    if(session.role !== 'TEACHER'){
         return {
             redirect: {
                 destination: '/dashboard/' + session.role.toLowerCase(),
@@ -80,22 +80,9 @@ export async function getServerSideProps(context: any) {
         username: session.username,
     }
 
-    let Classes = await prisma?.classes.findMany({
-        where: {
-            students: {
-                some: {
-                    userId: session.id
-                }
-            }
-        },
-    })
-
-    const DBData = JSON.stringify(Classes)
-
     return {
         props: {
             Data,
-            DBData
         },
     }
 }
