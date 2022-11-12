@@ -25,29 +25,23 @@ const Dashboard: NextPage<Props> = ({Data, DBData}) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <main>
-                <nav className='nav'></nav>
-                <div className="antialiased min-h-screen w-full bg-gradient-to-br from-primary to-secondary">
-                    <div className="flex flex-col items-center justify-center min-h-screen py-2 text-center">
-                        <h1 className="text-6xl font-bold text-primary-content">Dashboard</h1>
-                        <p className="mt-3 text-2xl text-secondary-content">
-                            {'Hello, ' + Data.username}
-                        </p>
-                        <div className="mt-6">
-                            <Link href="/api/auth/signout">
-                                <a className="px-4 py-2 text-lg font-semibold text-primary-content bg-primary rounded-lg hover:bg-primary-focus transition-colors duration-500">
-                                    Sign Out
-                                </a>
-                            </Link>
-                        </div>
+
+            <div className='antialiased'>
+                <nav className='navbar bg-primary'>
+                    <div className='navbar-start'>
+
                     </div>
-                </div>
 
-            </main>
 
-            <footer>
+                </nav>
 
-            </footer>
+                <main>
+                </main>
+
+                <footer>
+
+                </footer>
+            </div>
         </>
     );
 };

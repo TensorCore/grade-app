@@ -16,7 +16,7 @@ interface Props {
     },
     DBData: any
 }
-const Dashboard: NextPage<Props> = ({Data, DBData}) => {
+const Dashboard: NextPage<Props> = ({Data}) => {
     return (
         <>
             <Head>
