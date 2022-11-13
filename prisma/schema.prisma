@@ -24,8 +24,8 @@ model Classes {
 
 model User {
   id           String          @id @default(cuid())
-  name         String?
-  username     String?         @unique
+  name         String
+  username     String         @unique
   password     String
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
