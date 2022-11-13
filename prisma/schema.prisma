@@ -20,6 +20,7 @@ model Classes {
   enrolled  Int             @default(0)
   maxenroll Int
   students  UserInClasses[]
+  classtime String          @default("TBD")
 }
 
 model User {
