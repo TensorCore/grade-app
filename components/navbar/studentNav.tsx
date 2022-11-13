@@ -23,6 +23,7 @@ const StudentNavbar = (props: Props) => {
       </div>
 
       <div className="navbar-center">
+        <Link href="/dashboard/student"><div className="btn btn-ghost text-xl">Dashboard</div></Link>
         <Link href="/student/register"><div className="btn btn-ghost text-xl">Register</div></Link>
       </div>
       <div className="navbar-end">

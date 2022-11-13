@@ -45,7 +45,6 @@ const Dashboard: NextPage<Props> = ({ Data, DBData}) => {
           </div>
         </main>
 
-        <footer></footer>
       </div>
     </>
   );
@@ -105,9 +104,8 @@ export async function getServerSideProps(context: any) {
     },
   });
 
-  console.log(Classes);
   const DBData = JSON.stringify(Classes);
-  console.log(DBData);
+  
   return {
     props: {
       Data,
