@@ -1,9 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { unstable_getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]";
-import TeacherNavbar from "../../components/navbar/teacherNav";
-import TeacherCard from "../../components/card/teacherCard";
+import { authOptions } from "../../api/auth/[...nextauth]";
+import TeacherNavbar from "../../../components/navbar/teacherNav";
 
 //Dashboard Page for Grade App
 interface Props {
@@ -16,6 +15,8 @@ interface Props {
   DBData: any;
 }
 const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
+  
+
   DBData = JSON.parse(DBData);
   return (
     <>
@@ -33,18 +34,7 @@ const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
         />
 
         <main>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 p-10 content-center	">
-            {DBData.map((teacher: any) => (
-              <TeacherCard
-                key={teacher.id}
-                name={teacher.name}
-                enrolled={teacher.enrolled}
-                maxenroll={teacher.maxenroll}
-                classId={teacher.id}
-                classtime={teacher.classtime}
-              />
-            ))}
-          </div>
+
         </main>
       </div>
     </>
@@ -84,13 +74,14 @@ export async function getServerSideProps(context: any) {
     name: session.name,
   };
 
-  const Classes = await prisma?.classes.findMany({
+  // Get route param
+  const { class: param } = context.query;
+  // convert class to integer
+  const classId = parseInt(param);
+
+  const Classes = await prisma?.classes.findUnique({
     where: {
-      teacherId: session.id,
-    },
-    include: {
-      students: true,
-      teacher: true,
+      id: classId,
     },
   });
 
