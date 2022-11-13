@@ -13,7 +13,7 @@ const StudentNavbar = (props: Props) => {
       <div className="navbar-start">
         <Link href="/dashboard/student">
           <div className="btn btn-ghost normal-case text-xl">{props.role}-
-          {props?.name != null ? (
+          {props.name != null ? (
           <div className="text-xl">{props.name}</div>
         ) : (
           <div className="text-xl">{props.username}</div>

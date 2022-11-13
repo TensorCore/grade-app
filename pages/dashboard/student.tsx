@@ -3,7 +3,7 @@ import Head from "next/head";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
 import StudentNavbar from "../../components/navbar/studentNav";
-import StudentCard from "../../components/studentCard";
+import StudentCard from "../../components/card/studentCard";
 
 //Dashboard Page for Grade App
 interface Props {
@@ -80,6 +80,7 @@ export async function getServerSideProps(context: any) {
     id: session.id,
     role: session.role,
     username: session.username,
+    name: session.name,
   };
 
   let Classes = await prisma?.classes.findMany({
