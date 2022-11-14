@@ -24,7 +24,7 @@ async function deleteRegister(e: any, adminId: any, userId: any, classId: any ) 
   location.reload();
 }
 
-async function addClass(e: any, adminId: any) {
+async function addRegister(e: any, adminId: any) {
   const res = await axios.post("/api/admin/forceregister", {
     adminId: adminId,
     grade: e.target.name.grade,
@@ -37,7 +37,7 @@ async function changeGrade(e: any, userId: any, adminId: any, classId: any) {
   const res = await axios.post("/api/admin/changegrade", {
     userId: userId,
     classId: classId,
-    name: e.target.value,
+    grade: e.target.value,
     adminId: adminId,
   });
 }
@@ -80,7 +80,7 @@ const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
               </label>
               <h3 className="text-lg font-bold">Add user to the Grade App</h3>
               <div className="mt-4">
-                <form onSubmit={(e) => addClass(e, Data.id)}>
+                <form onSubmit={(e) => addRegister(e, Data.id)}>
                   <label className="block text-sm font-medium text-gray-700">
                     Grade
                   </label>
