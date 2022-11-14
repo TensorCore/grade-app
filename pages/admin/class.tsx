@@ -76,9 +76,6 @@ const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
         />
 
         <main>
-          {/* DaisyUI Add Class Modal */}
-          {/* Centered button */}
-
           <div className="flex justify-center">
             <label className="btn btn-primary" htmlFor="my-modal">
               Add Class
