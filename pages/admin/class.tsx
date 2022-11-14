@@ -50,9 +50,9 @@ async function changeEnroll(e: any, classId: any, adminId: any) {
   location.reload();
 }
 
-async function changeName(e: any, userId: any, adminId: any) {
-  const res = await axios.post("/api/admin/changename", {
-    userId: userId,
+async function changeName(e: any, classId: any, adminId: any) {
+  const res = await axios.post("/api/admin/changenameclass", {
+    classId: classId,
     name: e.target.value,
     adminId: adminId,
   });
