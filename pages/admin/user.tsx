@@ -33,7 +33,7 @@ async function addUser(e: any, adminId: any) {
   });
 }
 
-async function changeUsername(e: any, userId: any,adminId: any) {
+async function changeUsername(e: any, userId: any, adminId: any) {
   const res = await axios.post("/api/admin/changeusername", {
     userId: userId,
     username: e.target.value,
@@ -41,10 +41,28 @@ async function changeUsername(e: any, userId: any,adminId: any) {
   });
 }
 
-async function changePassword(e: any, userId: any,adminId: any) {
+async function changePassword(e: any, userId: any, adminId: any) {
   const res = await axios.post("/api/admin/changepassword", {
     userId: userId,
     password: e.target.value,
+    adminId: adminId,
+  });
+}
+
+async function changeRole(e: any, userId: any, adminId: any) {
+  const res = await axios.post("/api/admin/changerole", {
+    userId: userId,
+    role: e.target.value,
+    adminId: adminId,
+  });
+
+  location.reload();
+}
+
+async function changeName(e: any, userId: any, adminId: any) {
+  const res = await axios.post("/api/admin/changename", {
+    userId: userId,
+    name: e.target.value,
     adminId: adminId,
   });
 }
@@ -111,7 +129,7 @@ const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
                   <label className="block text-sm font-medium text-gray-700">
                     Role
                   </label>
-                  
+
                   <select
                     id="role"
                     name="role"
@@ -121,7 +139,6 @@ const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
                     <option value="TEACHER">Teacher</option>
                     <option value="STUDENT">Student</option>
                   </select>
-
 
                   <label className="block text-sm font-medium text-gray-700">
                     Name
@@ -168,29 +185,60 @@ const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
                       >
                         <td className="py-3 px-6 text-left whitespace-nowrap">
                           <div className="flex items-center">
-                          <span>{user.id}</span>
+                            <span>{user.id}</span>
                           </div>
                         </td>
                         <td className="py-3 px-6 text-left">
                           <div className="flex items-center">
-                          <input type="text" placeholder={user.username} className="input" onChange={(e)=>changeUsername(e, user.id, Data.id)}/>
+                            <input
+                              type="text"
+                              placeholder={user.username}
+                              className="input"
+                              onChange={(e) =>
+                                changeUsername(e, user.id, Data.id)
+                              }
+                            />
                           </div>
                         </td>
 
                         <td className="py-3 px-6 text-left">
                           <div className="flex items-center">
-                          <input type="text" placeholder={user.password} className="input" onChange={(e)=>changePassword(e, user.id, Data.id)}/>
+                            <input
+                              type="text"
+                              placeholder={user.password}
+                              className="input"
+                              onChange={(e) =>
+                                changePassword(e, user.id, Data.id)
+                              }
+                            />
                           </div>
                         </td>
 
                         <td className="py-3 px-6 text-center">
                           <div className="flex items-center justify-center">
-                            <span>{user.role}</span>
+                            <select
+                              id="role"
+                              name="role"
+                              className="block w-full py-2 px-7 mt-1 text-sm border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                              value={user.role}
+                              onChange={(e) => changeRole(e, user.id, Data.id)}
+                            >
+                              <option value="ADMIN">Admin</option>
+                              <option value="TEACHER">Teacher</option>
+                              <option value="STUDENT">Student</option>
+                            </select>
                           </div>
                         </td>
                         <td className="py-3 px-6 text-center">
                           <div className="flex items-center justify-center">
-                            <span>{user.name}</span>
+                          <input
+                              type="text"
+                              placeholder={user.name}
+                              className="input"
+                              onChange={(e) =>
+                                changeName(e, user.id, Data.id)
+                              }
+                            />
                           </div>
                         </td>
                         <td className="py-3 px-6 text-center">

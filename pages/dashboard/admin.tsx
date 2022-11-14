@@ -16,7 +16,6 @@ interface Props {
   DBData: any;
 }
 const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
-
   DBData = JSON.parse(DBData);
 
   return (
@@ -29,30 +28,35 @@ const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
 
       <div className="antialiased">
         <AdminNavbar
-            role={Data.role}
-            name={Data.name}
-            username={Data.username}
+          role={Data.role}
+          name={Data.name}
+          username={Data.username}
         />
 
         <main>
           {/* Center Cards Horizontally Spaced Evenly*/}
           <div className="flex justify-evenly mt-20">
-            <AdminCard
-              name="Users"
-              length= {DBData.UserCount}
-              path="user"
-            />
+            <AdminCard name="Users" length={DBData.UserCount} path="user" />
 
-            <AdminCard
-              name="Classes"
-              length= {DBData.ClassCount}
-              path="class"
-            />
+            <AdminCard name="Classes" length={DBData.ClassCount} path="class" />
             <AdminCard
               name="StudentsInClass"
-              length= {DBData.StudentInClassCount}
+              length={DBData.StudentInClassCount}
               path="studentclasses"
             />
+          </div>
+          {/* Centered In page button */}
+          <div className="flex justify-center mt-20">
+            {/* New Tab A */}
+            <a
+              href="http://localhost:5555/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="btn btn-ghost text-2xl btn-outline">
+                True Admin Pannel
+              </div>
+            </a>
           </div>
         </main>
       </div>
@@ -100,7 +104,6 @@ export async function getServerSideProps(context: any) {
   const ClassCount = await prisma?.classes.count();
 
   const StudentInClassCount = await prisma?.userInClasses.count();
-
 
   const DBData = JSON.stringify({ UserCount, ClassCount, StudentInClassCount });
 
