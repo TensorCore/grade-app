@@ -23,15 +23,14 @@ export default async function handler(
     return;
   }
 
-  const Class = await prisma.Class.create({
+  const classes = await prisma.classes.create({
     data: {
         name: data.name,
-        teacher: data.teacher,
+        teacherId: data.teacherId,
         maxenroll: data.maxenroll,
-        students: data.students,
         classtime: data.classtime,
     },
   });
 
-  res.status(200).json({ Class });
+  res.status(200).json({ classes });
 }

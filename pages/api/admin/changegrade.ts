@@ -23,11 +23,17 @@ export default async function handler(
     return;
   }
 
-  const classes = await prisma.classes.delete({
+  const user = await prisma.userInClasses.update({
     where: {
-        classId: data.classId,
+        userId_classId: {
+            userId: data.userId,
+            classId: data.classId
+        }
     },
+    data: {
+        name: data.name,
+    }
   });
 
-  res.status(200).json({ classes });
+  res.status(200).json({ user });
 }

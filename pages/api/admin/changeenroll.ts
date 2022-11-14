@@ -22,10 +22,10 @@ export default async function handler(
     res.status(401).json({ error: "Unauthorized" });
     return;
   }
-
-  const classes = await prisma.classes.delete({
+  
+  const classes = await prisma.classes.update({
     where: {
-        classId: data.classId,
+        id: data.classId,
     },
   });
 

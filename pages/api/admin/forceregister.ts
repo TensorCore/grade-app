@@ -23,11 +23,13 @@ export default async function handler(
     return;
   }
 
-  const classes = await prisma.classes.delete({
-    where: {
+  const user = await prisma.userInClasses.create({
+    data: {
+        grade: data.grade,
+        studentId: data.studentId,
         classId: data.classId,
     },
   });
 
-  res.status(200).json({ classes });
+  res.status(200).json({ user });
 }
