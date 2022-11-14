@@ -31,6 +31,8 @@ async function addUser(e: any, adminId: any) {
     name: e.target.name.value,
     adminId: adminId,
   });
+
+  location.reload();
 }
 
 async function changeUsername(e: any, userId: any, adminId: any) {
