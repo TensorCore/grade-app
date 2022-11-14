@@ -3,6 +3,7 @@ import Head from "next/head";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
 import AdminNavbar from "../../components/navbar/adminNav";
+import AdminCard from "../../components/card/adminCard";
 
 //Dashboard Page for Grade App
 interface Props {
@@ -14,7 +15,10 @@ interface Props {
   };
   DBData: any;
 }
-const Dashboard: NextPage<Props> = ({ Data }) => {
+const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
+
+  DBData = JSON.parse(DBData);
+
   return (
     <>
       <Head>
@@ -31,7 +35,25 @@ const Dashboard: NextPage<Props> = ({ Data }) => {
         />
 
         <main>
+          {/* Center Cards Horizontally Spaced Evenly*/}
+          <div className="flex justify-evenly mt-20">
+            <AdminCard
+              name="Users"
+              length= {DBData.UserCount}
+              path="user"
+            />
 
+            <AdminCard
+              name="Classes"
+              length= {DBData.ClassCount}
+              path="class"
+            />
+            <AdminCard
+              name="StudentsInClass"
+              length= {DBData.StudentInClassCount}
+              path="studentclasses"
+            />
+          </div>
         </main>
       </div>
     </>
@@ -68,11 +90,24 @@ export async function getServerSideProps(context: any) {
     id: session.id,
     role: session.role,
     username: session.username,
+    name: session.name,
   };
+
+  // Prisma Count Number of Users
+
+  const UserCount = await prisma?.user.count();
+
+  const ClassCount = await prisma?.classes.count();
+
+  const StudentInClassCount = await prisma?.userInClasses.count();
+
+
+  const DBData = JSON.stringify({ UserCount, ClassCount, StudentInClassCount });
 
   return {
     props: {
       Data,
+      DBData,
     },
   };
 }

@@ -23,12 +23,9 @@ export default async function handler(
     return;
   }
 
-  const user = await prisma.user.create({
-    data: {
-      name: data.name,
-      username: data.username,
-      role: data.role,
-      password: data.password,
+  const user = await prisma.user.delete({
+    where: {
+        id: data.userId,
     },
   });
 
