@@ -28,12 +28,12 @@ export default async function handler(
         userId_classId: {
             userId: data.userId,
             classId: data.classId
-        }
+        },
     },
     data: {
-        grade: parseInt(data.grade)
+        grade: parseInt(data.grade),
     }
-  });
+    });
 
   res.status(200).json({ user });
 }

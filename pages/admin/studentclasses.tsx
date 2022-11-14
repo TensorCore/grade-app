@@ -33,7 +33,7 @@ async function addRegister(e: any, adminId: any) {
   });
 }
 
-async function changeGrade(e: any, userId: any, adminId: any, classId: any) {
+async function changeGrade(e: any, userId: any, classId: any, adminId: any) {
   const res = await axios.post("/api/admin/changegrade", {
     userId: userId,
     classId: classId,
@@ -175,12 +175,12 @@ const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
                                 onChange={(e) =>
                                   changeGrade(
                                     e,
-                                    item.studentId,
+                                    item.userId,
                                     item.classId,
-                                    item.id
+                                    Data.id
                                   )
                                 }
-                                value={item.grade}
+                                placeholder={item.grade}
                               />
                             </div>
                           </td>
@@ -255,7 +255,6 @@ export async function getServerSideProps(context: any) {
       classId: true,
     },
   });
-  console.log(studentGrades)
 
   const DBData = JSON.stringify(studentGrades);
 
