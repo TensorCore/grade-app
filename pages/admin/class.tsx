@@ -15,7 +15,7 @@ interface Props {
 }
 
 async function deleteClass(e: any, classId: any, adminId: any) {
-  const res = await axios.post("/api/admin/deleteclass", {
+  const res = await axios.post("/api/admin/deleteclasses", {
     classId: classId,
     adminId: adminId,
   });
@@ -24,7 +24,7 @@ async function deleteClass(e: any, classId: any, adminId: any) {
 }
 
 async function addClass(e: any, adminId: any) {
-  const res = await axios.post("/api/admin/newclass", {
+  const res = await axios.post("/api/admin/newclasses", {
     adminId: adminId,
     name: e.target.name.value,
     teacherId: e.target.teacherId.value,

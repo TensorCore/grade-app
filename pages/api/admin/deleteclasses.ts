@@ -23,12 +23,9 @@ export default async function handler(
     return;
   }
 
-  const classes = await prisma.classes.create({
-    data: {
-        name: data.name,
-        teacherId: data.teacherId,
-        maxenroll: data.maxenroll,
-        classtime: data.classtime,
+  const classes = await prisma.classes.delete({
+    where: {
+        id: data.classId,
     },
   });
 

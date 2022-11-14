@@ -16,6 +16,7 @@ export default async function handler(
   }
 
   const data = req.body;
+  console.log(data)
 
   //   @ts-ignore  --Can't augment default session type
   if (session.role != "ADMIN" && session.id != body.adminId) {
@@ -23,9 +24,13 @@ export default async function handler(
     return;
   }
 
-  const classes = await prisma.classes.delete({
-    where: {
-        classId: data.classId,
+  const classes = await prisma.classes.create({
+    data: {
+        name: data.name,
+        teacherId: data.teacherId,
+        maxenroll: data.maxEnroll,
+        classtime: data.classTime,
+        
     },
   });
 
