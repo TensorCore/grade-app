@@ -24,7 +24,7 @@ async function deleteClass(e: any, classId: any, adminId: any) {
 }
 
 async function addClass(e: any, adminId: any) {
-  const res = await axios.post("/api/admin/newclass", {
+  const res = await axios.post("/api/admin/createclass", {
     adminId: adminId,
     name: e.target.name.value,
     teacherId: e.target.teacherId.value,
@@ -44,10 +44,9 @@ async function changeTime(e: any, classId: any, adminId: any) {
 async function changeEnroll(e: any, classId: any, adminId: any) {
   const res = await axios.post("/api/admin/changeenroll", {
     classId: classId,
+    maxEnroll: e.target.value,
     adminId: adminId,
   });
-
-  location.reload();
 }
 
 async function changeName(e: any, classId: any, adminId: any) {
