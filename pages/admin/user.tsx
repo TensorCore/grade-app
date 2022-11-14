@@ -33,6 +33,22 @@ async function addUser(e: any, adminId: any) {
   });
 }
 
+async function changeUsername(e: any, userId: any,adminId: any) {
+  const res = await axios.post("/api/admin/changeusername", {
+    userId: userId,
+    username: e.target.value,
+    adminId: adminId,
+  });
+}
+
+async function changePassword(e: any, userId: any,adminId: any) {
+  const res = await axios.post("/api/admin/changepassword", {
+    userId: userId,
+    password: e.target.value,
+    adminId: adminId,
+  });
+}
+
 const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
   DBData = JSON.parse(DBData);
   return (
@@ -95,7 +111,7 @@ const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
                   <label className="block text-sm font-medium text-gray-700">
                     Role
                   </label>
-                  {/* Select 3 roles */}
+                  
                   <select
                     id="role"
                     name="role"
@@ -138,6 +154,7 @@ const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
                     <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                       <th className="py-3 px-6 text-left">ID</th>
                       <th className="py-3 px-6 text-left">Username</th>
+                      <th className="py-3 px-4 text-left">Password</th>
                       <th className="py-3 px-6 text-center">Role</th>
                       <th className="py-3 px-6 text-center">Name</th>
                       <th className="py-3 px-6 text-center">Delete</th>
@@ -151,14 +168,21 @@ const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
                       >
                         <td className="py-3 px-6 text-left whitespace-nowrap">
                           <div className="flex items-center">
-                            <span className="font-medium">{user.id}</span>
+                          <span>{user.id}</span>
                           </div>
                         </td>
                         <td className="py-3 px-6 text-left">
                           <div className="flex items-center">
-                            <span>{user.username}</span>
+                          <input type="text" placeholder={user.username} className="input" onChange={(e)=>changeUsername(e, user.id, Data.id)}/>
                           </div>
                         </td>
+
+                        <td className="py-3 px-6 text-left">
+                          <div className="flex items-center">
+                          <input type="text" placeholder={user.password} className="input" onChange={(e)=>changePassword(e, user.id, Data.id)}/>
+                          </div>
+                        </td>
+
                         <td className="py-3 px-6 text-center">
                           <div className="flex items-center justify-center">
                             <span>{user.role}</span>

@@ -91,8 +91,6 @@ const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
                           </td>
                           <td className="px-6 py-3 whitespace-nowrap">
                             <div className="text-sm text-gray-900">
-                              {/* onChange={(e) => submitGrade(e, DBData[0].id,item.user.id,Data.id)} */}
-                              {/* Grade Number Input */}
                                 <input
                                   type="number"
                                   className="w-20 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
