@@ -33,7 +33,7 @@ async function addClass(e: any, adminId: any) {
   });
 }
 
-async function changeTime(e: any, classId: any,userId: any, adminId: any) {
+async function changeTime(e: any, classId: any, adminId: any) {
   const res = await axios.post("/api/admin/changetime", {
     classId: classId,
     classTime: e.target.value,
@@ -41,10 +41,9 @@ async function changeTime(e: any, classId: any,userId: any, adminId: any) {
   });
 }
 
-async function changeTeacher(e: any, classId: any, adminId: any) {
-  const res = await axios.post("/api/admin/changeteacher", {
+async function changeEnroll(e: any, classId: any, adminId: any) {
+  const res = await axios.post("/api/admin/changeenroll", {
     classId: classId,
-    teacherId: e.target.value,
     adminId: adminId,
   });
 
@@ -218,7 +217,14 @@ const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm text-gray-900">
-                              {item.name}
+                            <input 
+                              type="text"
+                              name="name"
+                              id="name"
+                              placeholder={item.name}
+                              className="block w-full px-3 py-2 mt-1 text-sm border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                              onChange={(e) => changeName(e, item.id, Data.id)}
+                              />
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
@@ -233,12 +239,26 @@ const Dashboard: NextPage<Props> = ({ Data, DBData }) => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm text-gray-900">
-                              {item.maxenroll}
+                              <input 
+                              type="text"
+                              name="maxEnroll"
+                              id="maxEnroll"
+                              placeholder={item.maxenroll}
+                              className="block w-16 px-3 py-2 mt-1 text-sm border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                              onChange={(e) => changeEnroll(e, item.id, Data.id)}
+                              />
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm text-gray-900">
-                              {item.classtime}
+                            <input 
+                              type="text"
+                              name="classTime"
+                              id="classTime"
+                              placeholder={item.classtime}
+                              className="block w-full px-3 py-2 mt-1 text-sm border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                              onChange={(e) => changeTime(e, item.id, Data.id)}
+                              />
                             </div>
                           </td>
                           <td className="py-3 px-6 text-center">
